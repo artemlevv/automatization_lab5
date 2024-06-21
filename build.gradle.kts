@@ -24,6 +24,16 @@ java {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/artemlevv/automatization_lab5")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GH_USERNAMe")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GH_TOKEN")
+            }
+        }
+    }
     publications {
         create<MavenPublication>("main") {
             groupId = "org.example"
