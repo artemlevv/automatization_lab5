@@ -42,7 +42,7 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/artemlevv/automatization_lab5")
             credentials {
-                username = System.getenv("GH_USERNAME")
+                username = artemlevv
                 password = System.getenv("GH_TOKEN")
             }
         }
