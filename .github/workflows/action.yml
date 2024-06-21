@@ -25,32 +25,19 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Publish JAR Artifact
-      uses: actions/upload-artifact@v2
+    - name: Publish to GitHub Packages
+      uses: gradle-publish/action-publish@v1
       with:
-        name: Lab5-CI
-        path: build/libs/*.jar
-    - name: Configure Git
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-
-    - name: Clone repository to upload artifact
-      uses: actions/checkout@v2
-      with:
-        repository: ${{ github.repository }}
-
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: Lab5-CI
-        path: build/libs
-
-    - name: Commit artifact to repository
-      run: |
-        git add -f build/libs/*.jar
-        git commit -m "Add artifact from GitHub Actions build ${{ github.run_number }}"
-        git push
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        jdk_version: 11
+        gradle_version: 6.8.3
+        target_repository: artemlevv/automatization_lab5/GitHub Packages Repository Name
+        publications: |
+          repositories {
+            maven {
+              url = "https://maven.pkg.github.com/artemlevv/automatization_lab5"
+            }
+          }
 
   super-lint:
     name: Lint code base
