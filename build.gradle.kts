@@ -28,7 +28,7 @@ publishing {
         create<MavenPublication>("main") {
             groupId = "org.example"
             artifactId = "automatization_lab5"
-            version = "1.0"
+            version = "2.0"
             from(components["java"])
         }
     }
