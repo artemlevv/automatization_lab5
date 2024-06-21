@@ -1,7 +1,6 @@
-
 plugins {
-    id("java")
-    application
+    id("maven-publish")
+    id("java-library")
 }
 
 group = "org.example"
@@ -20,6 +19,32 @@ tasks.test {
     useJUnitPlatform()
 }
 
-application {
-    mainClass.set("Main.java")
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("main") {
+            groupId = "rg.example"
+            artifactId = "Lab5"
+            version = "0.3.5"
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            name = "LocalRepo"
+            url = uri("$buildDir/publish")
+        }
+
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/artemlevv/automatization_lab5")
+            credentials {
+                username = System.getenv("GH_USERNAME")
+                password = System.getenv("GH_TOKEN")
+            }
+        }
+    }
 }
