@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.example"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -26,9 +26,9 @@ java {
 publishing {
     publications {
         create<MavenPublication>("main") {
-            groupId = "rg.example"
+            groupId = "org.example"
             artifactId = "Lab5"
-            version = "0.3.5"
+            version = "1.0"
             from(components["java"])
         }
     }
