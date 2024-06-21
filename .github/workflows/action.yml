@@ -24,15 +24,33 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
-      
-    - name: Publish to Maven Repository
-      run: ./gradlew publish
 
     - name: Publish JAR Artifact
       uses: actions/upload-artifact@v2
       with:
         name: Lab5-CI
         path: build/libs/*.jar
+    - name: Configure Git
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+
+    - name: Clone repository to upload artifact
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ github.repository }}
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: Lab5-CI
+        path: build/libs
+
+    - name: Commit artifact to repository
+      run: |
+        git add build/libs/*.jar
+        git commit -m "Add artifact from GitHub Actions build ${{ github.run_number }}"
+        git push
 
   super-lint:
     name: Lint code base
