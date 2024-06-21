@@ -48,7 +48,7 @@ jobs:
 
     - name: Commit artifact to repository
       run: |
-        git add build/libs/*.jar
+        git add -f build/libs/*.jar
         git commit -m "Add artifact from GitHub Actions build ${{ github.run_number }}"
         git push
 
